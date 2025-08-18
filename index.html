@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koro - Your Digital Shopping Destination</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(to right, #FF7F50, #FFA07A);
+        }
+        
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .bg-coral {
+            background-color: #FF7F50;
+        }
+        
+        .text-coral {
+            color: #FF7F50;
+        }
+        
+        .bg-green {
+            background-color: #2E8B57;
+        }
+        
+        .text-green {
+            color: #2E8B57;
+        }
+        
+        .btn-hover {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        
+        .btn-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .wave {
+            animation: wave 8s linear infinite;
+        }
+        
+        @keyframes wave {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(-5deg); }
+            100% { transform: rotate(0deg); }
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50 overflow-x-hidden">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white shadow-lg transition-all duration-300">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <a href="#" class="text-3xl font-bold">
+                        <span class="text-coral">K</span>
+                        <span class="text-green">o</span>
+                        <span class="text-coral">r</span>
+                        <span class="text-green">o</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-coral font-medium">Home</a>
+                    <a href="#about" class="text-gray-700 hover:text-coral font-medium">About</a>
+                    <a href="#contact" class="text-gray-700 hover:text-coral font-medium">Contact</a>
+                    <a href="https://igdndujs.mychariow.com" target="_blank" class="bg-green text-white px-6 py-2 rounded-full hover:bg-green-700 transition-all btn-hover">Shop Now</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="text-gray-700 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="md:hidden hidden mt-4 pb-3">
+                <a href="#home" class="block py-2 text-gray-700 hover:text-coral">Home</a>
+                <a href="#about" class="block py-2 text-gray-700 hover:text-coral">About</a>
+                <a href="#contact" class="block py-2 text-gray-700 hover:text-coral">Contact</a>
+                <a href="https://igdndujs.mychariow.com" target="_blank" class="block bg-green text-white px-6 py-2 rounded-full text-center mt-2 w-40">Shop Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center parallax bg-gradient-to-r from-orange-300 to-green-400 relative overflow-hidden pt-16">
+        <div class="absolute w-full h-full bg-black opacity-20"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row items-center"> 
+                <div class="md:w-1/2 text-center md:text-left mb-10 md:mb-0">
+                    <h1 class="text-5xl md:text-6xl font-bold text-white mb-4">Welcome to <span class="text-coral">K</span><span class="text-green ">o</span><span class="text-coral">r</span><span class="text-green">o</span></h1>
+                    <p class="text-xl text-white mb-8">Your one-stop digital shop for everything you need.</p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start">
+                        <a href="https://igdndujs.mychariow.com" target="_blank" class="bg-green text-white px-8 py-3 rounded-full font-bold hover:bg-green-700 transition-all btn-hover pulse">Explore Shop</a>
+                        <a href="#contact" class="bg-white text-coral px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition-all btn-hover">Contact Us</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <img src="imgs/koro.png" alt="Online Shopping" class="rounded-full shadow-2xl floating max-w-md w-full">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Floating elements for decoration -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div class="absolute top-20 left-10 w-16 h-16 rounded-full bg-green opacity-20 floating" style="animation-delay: 0.3s;"></div>
+            <div class="absolute bottom-40 right-20 w-24 h-24 rounded-full bg-coral opacity-15 floating" style="animation-delay: 0.7s;"></div>
+            <div class="absolute top-1/3 right-1/4 w-20 h-20 rounded-full bg-white opacity-10 floating" style="animation-delay: 1.2s;"></div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+            <div class="animate-bounce w-8 h-14 border-4 border-white rounded-full flex justify-center relative">
+                <div class="w-1 h-3 bg-white rounded-full absolute top-2"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="About Us" class="rounded-lg shadow-xl max-w-md w-full transform transition-all hover:scale-105 duration-500">
+                </div>
+                <div class="md:w-1/2 md:pl-12">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-6">About <span class="text-coral">K</span><span class="text-green">o</span><span class="text-coral">r</span><span class="text-green">o</span></h2>
+                    <p class="text-lg text-gray-600 mb-6">Koro is your premier digital shopping destination, offering a wide variety of products to meet all your needs. From the latest tech gadgets to everyday essentials, we've got you covered.</p>
+                    <p class="text-lg text-gray-600 mb-8">Our mission is to provide a seamless shopping experience with exceptional customer service and high-quality products at competitive prices.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/koroofficialline" target="_blank" class="bg-blue-600 text-white px-6 py-2 rounded-full flex items-center hover:bg-blue-700 transition-all btn-hover">
+                            <i class="fab fa-facebook-f mr-2"></i> Facebook
+                        </a>
+                        <a href="https://igdndujs.mychariow.com" target="_blank" class="bg-green text-white px-6 py-2 rounded-full flex items-center hover:bg-green-700 transition-all btn-hover">
+                            <i class="fas fa-shopping-cart mr-2"></i> Visit Shop
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section with Parallax -->
+    <section class="py-20 parallax bg-green text-white" style="background-image: url('imgs/banner.png');">
+        <div class="bg-black bg-opacity-60">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4">Why Shop With Us</h2>
+                    <p class="text-xl opacity-90">Experience the Koro difference</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-8 transform transition-all hover:scale-105 duration-300">
+                        <div class="w-16 h-16 bg-coral rounded-full flex items-center justify-center mb-6 mx-auto">
+                            <i class="fas fa-truck text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4 text-center">Fast Delivery</h3>
+                        <p class="text-white text-opacity-90">Get your products delivered quickly and efficiently to your doorstep.</p>
+                    </div>
+                    <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-8 transform transition-all hover:scale-105 duration-300">
+                        <div class="w-16 h-16 bg-coral rounded-full flex items-center justify-center mb-6 mx-auto">
+                            <i class="fas fa-undo text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4 text-center">Easy Returns</h3>
+                        <p class="text-white text-opacity-90">Not satisfied? Our hassle-free return policy has you covered.</p>
+                    </div>
+                    <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-8 transform transition-all hover:scale-105 duration-300">
+                        <div class="w-16 h-16 bg-coral rounded-full flex items-center justify-center mb-6 mx-auto">
+                            <i class="fas fa-headset text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4 text-center">24/7 Support</h3>
+                        <p class="text-white text-opacity-90">Our customer service team is always ready to assist you.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Get In Touch</h2>
+                <p class="text-xl text-gray-600">We'd love to hear from you!</p>
+            </div>
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-8">
+                    <form class="bg-white p-8 rounded-xl shadow-lg">
+                        <div class="mb-6">
+                            <label for="name" class="block text-gray-700 font-medium mb-2">Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-coral" placeholder="Your name">
+                        </div>
+                        <div class="mb-6">
+                            <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-coral" placeholder="Your email">
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 font-medium mb-2">Message</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-coral" placeholder="Your message"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-coral text-white py-3 rounded-lg font-bold hover:bg-coral-600 transition-all btn-hover">Send Message</button>
+                    </form>
+                </div>
+                <div class="md:w-1/2 md:pl-8">
+                    <div class="bg-white p-8 rounded-xl shadow-lg h-full">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Contact Information</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="bg-green bg-opacity-10 p-3 rounded-full mr-4">
+                                    <i class="fas fa-map-marker-alt text-white  text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 mb-1">Address</h4>
+                                    <p class="text-gray-600">123 Digital Avenue, Online City</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-green bg-opacity-10 p-3 rounded-full mr-4">
+                                    <i class="fas fa-envelope text-white  text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 mb-1">Email</h4>
+                                    <p class="text-gray-600">contact@koro-shop.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-green bg-opacity-10 p-3 rounded-full mr-4">
+                                    <i class="fas fa-phone-alt text-white  text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 mb-1">Phone</h4>
+                                    <p class="text-gray-600">+123 456 7890</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-8">
+                            <h4 class="font-bold text-gray-800 mb-4">Follow Us</h4>
+                            <div class="flex space-x-4">
+                                <a href="https://www.facebook.com/koroofficialline" target="_blank" class="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-700 transition-all btn-hover">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="bg-pink-600 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-700 transition-all btn-hover">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="bg-green-400 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-500 transition-all btn-hover">
+                                    <i class="fab fa-whatsapp "></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-coral text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-6">Ready to Start Shopping?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Browse our extensive collection of products and find exactly what you need.</p>
+            <a href="https://igdndujs.mychariow.com" target="_blank" class="bg-white text-coral px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition-all btn-hover inline-block">Visit Our Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-8 md:mb-0">
+                    <a href="#" class="text-3xl font-bold">
+                        <span class="text-coral">K</span>
+                        <span class="text-green">o</span>
+                        <span class="text-coral">r</span>
+                        <span class="text-green">o</span>
+                    </a>
+                    <p class="mt-4 text-gray-400">Your premier digital shopping destination.</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#home" class="text-gray-400 hover:text-white transition-all">Home</a></li>
+                            <li><a href="#about" class="text-gray-400 hover:text-white transition-all">About</a></li>
+                            <li><a href="#contact" class="text-gray-400 hover:text-white transition-all">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Shop</h3>
+                        <ul class="space-y-2">
+                            <li><a href="https://igdndujs.mychariow.com" target="_blank" class="text-gray-400 hover:text-white transition-all">All Products</a></li>
+                            <li><a href="https://igdndujs.mychariow.com" class="text-gray-400 hover:text-white transition-all">Featured</a></li>
+                            <li><a href="https://igdndujs.mychariow.com" class="text-gray-400 hover:text-white transition-all">New Arrivals</a></li>
+                        </ul>
+                    </div> 
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Connect</h3>
+                        <ul class="space-y-2">
+                            <li><a href="https://www.facebook.com/koroofficialline" target="_blank" class="text-gray-400 hover:text-white transition-all">Facebook</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-all">Instagram</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-all">WhatsApp</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© 2025 Koro. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition-all">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-all">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-all">Shipping Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // GSAP animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animate hero section elements
+        gsap.from(".hero-content", {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: "power3.out"
+        });
+
+        gsap.from(".hero-image", {
+            duration: 1,
+            x: 50,
+            opacity: 0,
+            ease: "power3.out",
+            delay: 0.3
+        });
+
+        // Animate about section on scroll
+        gsap.from("#about img", {
+            scrollTrigger: {
+                trigger: "#about",
+                start: "top 75%",
+                toggleActions: "play none none none"
+            },
+            x: -100,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out"
+        });
+
+        gsap.from("#about .md:pl-12", {
+            scrollTrigger: {
+                trigger: "#about",
+                start: "top 75%",
+                toggleActions: "play none none none"
+            },
+            x: 100,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+            delay: 0.3
+        });
+
+        // Animate features on scroll
+        gsap.utils.toArray(".bg-white.bg-opacity-10").forEach(item => {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.2
+            });
+        });
+
+        // Animate contact form on scroll
+        gsap.from("form", {
+            scrollTrigger: {
+                trigger: "#contact",
+                start: "top 75%",
+                toggleActions: "play none none none"
+            },
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out"
+        });
+
+        gsap.from(".contact-info", {
+            scrollTrigger: {
+                trigger: "#contact",
+                start: "top 75%",
+                toggleActions: "play none none none"
+            },
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+            delay: 0.3
+        });
+
+        // Navbar scroll effect
+        window.addEventListener("scroll", function() {
+            const nav = document.querySelector("nav");
+            if (window.scrollY > 50) {
+                nav.classList.add("py-2");
+                nav.classList.add("shadow-md");
+            } else {
+                nav.classList.remove("py-2");
+                nav.classList.remove("shadow-md");
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
