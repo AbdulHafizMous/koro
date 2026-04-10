@@ -1,477 +1,2462 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" data-theme="dark">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Koro - Your Digital Shopping Destination</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Koro — Produits Numériques Premium</title>
+    <meta name="description"
+        content="Koro Store — Des produits numériques conçus pour votre réussite. Découvrez notre boutique." />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+        rel="stylesheet" />
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
     <style>
+        /* ============================
+       CSS VARIABLES & THEMING
+    ============================ */
+        :root {
+            --coral: #FF6B47;
+            --coral-light: #FF8A6E;
+            --coral-dark: #E5502E;
+            --green: #2DB87A;
+            --green-light: #4DD494;
+            --green-dark: #1E9962;
+            --gold: #F5C842;
+
+            /* Dark theme (default) */
+            --bg: #0A0A0F;
+            --bg2: #111118;
+            --bg3: #18181F;
+            --bg4: #1E1E28;
+            --surface: #22222E;
+            --surface2: #2A2A38;
+            --border: rgba(255, 255, 255, 0.07);
+            --text: #F0EFF8;
+            --text2: #A09EBB;
+            --text3: #6B6A80;
+            --nav-bg: rgba(10, 10, 15, 0.85);
+            --card-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+            --glow-coral: 0 0 40px rgba(255, 107, 71, 0.25);
+            --glow-green: 0 0 40px rgba(45, 184, 122, 0.2);
+        }
+
+        [data-theme="light"] {
+            --bg: #F7F6FF;
+            --bg2: #EFEEFC;
+            --bg3: #E8E6F9;
+            --bg4: #DFDCF5;
+            --surface: #FFFFFF;
+            --surface2: #F3F2FF;
+            --border: rgba(0, 0, 0, 0.08);
+            --text: #12111A;
+            --text2: #5A5875;
+            --text3: #9896B0;
+            --nav-bg: rgba(247, 246, 255, 0.9);
+            --card-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+            --glow-coral: 0 0 30px rgba(255, 107, 71, 0.15);
+            --glow-green: 0 0 30px rgba(45, 184, 122, 0.12);
+        }
+
+        /* ============================
+       RESET & BASE
+    ============================ */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+
+        /* ============================
+       TYPOGRAPHY
+    ============================ */
+        .font-display {
+            font-family: 'Syne', sans-serif;
+        }
+
         .text-gradient {
-            background-clip: text;
+            background: linear-gradient(135deg, var(--coral), var(--gold));
             -webkit-background-clip: text;
-            color: transparent;
-            background-image: linear-gradient(to right, #FF7F50, #FFA07A);
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        
-        .parallax {
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
+
+        .text-gradient-green {
+            background: linear-gradient(135deg, var(--green), #7EFFD4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        
-        .bg-coral {
-            background-color: #FF7F50;
+
+        /* ============================
+       LAYOUT
+    ============================ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
-        
-        .text-coral {
-            color: #FF7F50;
+
+        section {
+            position: relative;
         }
-        
-        .bg-green {
-            background-color: #2E8B57;
+
+        /* ============================
+       NOISE OVERLAY
+    ============================ */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.4;
         }
-        
-        .text-green {
-            color: #2E8B57;
+
+        /* ============================
+       NAVBAR
+    ============================ */
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 900;
+            padding: 20px 0;
+            background: transparent;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
-        .btn-hover {
-            transition: all 0.3s ease;
-            transform: translateY(0);
+
+        #navbar.scrolled {
+            background: var(--nav-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
         }
-        
-        .btn-hover:hover {
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-logo img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .nav-logo span {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--coral), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text2);
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--coral);
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-theme {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text2);
+            transition: all 0.3s;
+            font-size: 0.85rem;
+        }
+
+        .btn-theme:hover {
+            background: var(--surface2);
+            color: var(--coral);
+        }
+
+        .btn-primary {
+            padding: 10px 22px;
+            background: linear-gradient(135deg, var(--coral), var(--coral-dark));
+            color: #fff;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(255, 107, 71, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 107, 71, 0.45);
+        }
+
+        .hamburger {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .hamburger:hover {
+            background: var(--surface2);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 72px;
+            left: 12px;
+            right: 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
+            z-index: 890;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--card-shadow);
+        }
+
+        .mobile-nav.open {
+            display: block;
+        }
+
+        .mobile-nav a {
+            display: block;
+            padding: 12px 0;
+            font-weight: 500;
+            color: var(--text2);
+            border-bottom: 1px solid var(--border);
+            transition: color 0.3s;
+        }
+
+        .mobile-nav a:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-nav a:hover {
+            color: var(--coral);
+        }
+
+        /* ============================
+       HERO
+    ============================ */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .hero-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+        }
+
+        .hero-orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--coral) 0%, transparent 70%);
+            top: -200px;
+            right: -100px;
+        }
+
+        .hero-orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--green) 0%, transparent 70%);
+            bottom: -200px;
+            left: -100px;
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--coral);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .hero-badge span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        .hero-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.8rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.05;
+            margin-bottom: 24px;
+            color: var(--text);
+        }
+
+        .hero-desc {
+            font-size: 1.15rem;
+            color: var(--text2);
+            line-height: 1.7;
+            margin-bottom: 40px;
+            max-width: 480px;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .btn-outline {
+            padding: 10px 22px;
+            border: 1.5px solid var(--border);
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: var(--text);
+            background: transparent;
+            transition: all 0.3s;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--coral);
+            color: var(--coral);
+            background: rgba(255, 107, 71, 0.07);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .hero-stat {
+            text-align: left;
+        }
+
+        .hero-stat-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .hero-stat-label {
+            font-size: 0.8rem;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-img-wrap {
+            position: relative;
+            width: 380px;
+            height: 380px;
+        }
+
+        .hero-img-ring {
+            position: absolute;
+            inset: -20px;
+            border-radius: 50%;
+            border: 1.5px solid var(--border);
+            animation: spin 20s linear infinite;
+        }
+
+        .hero-img-ring::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--coral);
+            box-shadow: var(--glow-coral);
+        }
+
+        .hero-img-ring-2 {
+            position: absolute;
+            inset: -50px;
+            border-radius: 50%;
+            border: 1px dashed var(--border);
+            animation: spin 35s linear infinite reverse;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hero-img {
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            z-index: 2;
+            animation: float 4s ease-in-out infinite;
+            box-shadow: var(--glow-coral), 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-18px);
+            }
+        }
+
+        .hero-card {
+            position: absolute;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 14px 18px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            backdrop-filter: blur(12px);
+            z-index: 3;
+            box-shadow: var(--card-shadow);
+        }
+
+        .hero-card.top-right {
+            top: 10%;
+            right: -30px;
+        }
+
+        .hero-card.bottom-left {
+            bottom: 10%;
+            left: -30px;
+        }
+
+        .hero-card-icon {
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+        }
+
+        .hero-card-val {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .hero-card-sub {
+            color: var(--text3);
+            font-size: 0.75rem;
+        }
+
+        /* ============================
+       SECTION HEADER
+    ============================ */
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 5px 14px;
+            background: rgba(255, 107, 71, 0.1);
+            border: 1px solid rgba(255, 107, 71, 0.25);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--coral);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+
+        .section-desc {
+            font-size: 1.05rem;
+            color: var(--text2);
+            max-width: 560px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* ============================
+       MARQUEE
+    ============================ */
+        .marquee-section {
+            padding: 32px 0;
+            overflow: hidden;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: var(--bg2);
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 48px;
+            width: max-content;
+            animation: marquee 20s linear infinite;
+        }
+
+        .marquee-section:hover .marquee-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text3);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .marquee-item i {
+            color: var(--coral);
+            font-size: 0.7rem;
+        }
+
+        /* ============================
+       ABOUT
+    ============================ */
+        #about {
+            padding: 100px 0;
+            background: var(--bg2);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-visual {
+            position: relative;
+        }
+
+        .about-img-main {
+            width: 100%;
+            border-radius: 24px;
+            object-fit: cover;
+            aspect-ratio: 4/3;
+            box-shadow: var(--card-shadow);
+        }
+
+        .about-chip {
+            position: absolute;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px 20px;
+            backdrop-filter: blur(12px);
+            box-shadow: var(--card-shadow);
+        }
+
+        .about-chip.tl {
+            top: -20px;
+            left: -20px;
+        }
+
+        .about-chip.br {
+            bottom: -20px;
+            right: -20px;
+        }
+
+        .about-chip-icon {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+        }
+
+        .about-chip-val {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .about-chip-sub {
+            font-size: 0.75rem;
+            color: var(--text3);
+        }
+
+        .about-text .section-header {
+            text-align: left;
+            margin-bottom: 32px;
+        }
+
+        .about-text p {
+            color: var(--text2);
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .about-feat {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            transition: all 0.3s;
+        }
+
+        .about-feat:hover {
+            border-color: rgba(255, 107, 71, 0.3);
+            box-shadow: var(--glow-coral);
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
-        
-        .floating {
-            animation: floating 3s ease-in-out infinite;
+
+        .about-feat-icon {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            border-radius: 10px;
+            background: rgba(255, 107, 71, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: var(--coral);
         }
-        
-        @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
+
+        .about-feat-text strong {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 2px;
         }
-        
-        .pulse {
-            animation: pulse 2s infinite;
+
+        .about-feat-text span {
+            font-size: 0.78rem;
+            color: var(--text3);
         }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+
+        .about-socials {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+            flex-wrap: wrap;
         }
-        
-        .wave {
-            animation: wave 8s linear infinite;
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1.5px solid var(--border);
+            transition: all 0.3s;
+            color: var(--text);
         }
-        
-        @keyframes wave {
-            0% { transform: rotate(0deg); }
-            25% { transform: rotate(5deg); }
-            50% { transform: rotate(0deg); }
-            75% { transform: rotate(-5deg); }
-            100% { transform: rotate(0deg); }
+
+        .social-btn:hover {
+            border-color: var(--coral);
+            color: var(--coral);
+            background: rgba(255, 107, 71, 0.07);
+            transform: translateY(-2px);
+        }
+
+        /* ============================
+       PRODUCTS
+    ============================ */
+        #products {
+            padding: 100px 0;
+            background: var(--bg);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 28px;
+        }
+
+        .product-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 107, 71, 0.3);
+            box-shadow: var(--glow-coral), var(--card-shadow);
+        }
+
+        .product-thumb {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            background: var(--bg3);
+        }
+
+        .product-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .product-card:hover .product-thumb img {
+            transform: scale(1.06);
+        }
+
+        .product-thumb-fallback {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--bg3), var(--bg4));
+            font-size: 3rem;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .badge-sale {
+            background: var(--coral);
+            color: #fff;
+        }
+
+        .badge-free {
+            background: var(--green);
+            color: #fff;
+        }
+
+        .badge-category {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            backdrop-filter: blur(8px);
+        }
+
+        .product-body {
+            padding: 24px;
+        }
+
+        .product-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .product-desc {
+            font-size: 0.85rem;
+            color: var(--text3);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .product-price {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-price-current {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--coral);
+        }
+
+        .product-price-original {
+            font-size: 0.78rem;
+            color: var(--text3);
+            text-decoration: line-through;
+        }
+
+        .product-off {
+            font-size: 0.72rem;
+            color: var(--green);
+            font-weight: 700;
+        }
+
+        .btn-product {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, var(--coral), var(--coral-dark));
+            color: #fff;
+            border-radius: 100px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 107, 71, 0.25);
+            white-space: nowrap;
+        }
+
+        .btn-product:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 71, 0.4);
+        }
+
+        .products-loading {
+            text-align: center;
+            padding: 60px;
+            color: var(--text3);
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--coral);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        .products-empty {
+            text-align: center;
+            padding: 60px;
+            color: var(--text3);
+        }
+
+        .products-empty i {
+            font-size: 3rem;
+            color: var(--border);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .products-cta {
+            text-align: center;
+            margin-top: 48px;
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--green);
+            color: var(--green);
+            background: rgba(45, 184, 122, 0.07);
+            transform: translateY(-2px);
+        }
+
+        /* ============================
+       WHY KORO
+    ============================ */
+        #why {
+            padding: 100px 0;
+            background: var(--bg2);
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .why-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 36px 28px;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .why-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(255, 107, 71, 0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .why-card:hover::before {
+            opacity: 1;
+        }
+
+        .why-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 107, 71, 0.2);
+            box-shadow: var(--glow-coral);
+        }
+
+        .why-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+        }
+
+        .why-icon.orange {
+            background: rgba(255, 107, 71, 0.12);
+            color: var(--coral);
+        }
+
+        .why-icon.green {
+            background: rgba(45, 184, 122, 0.12);
+            color: var(--green);
+        }
+
+        .why-icon.gold {
+            background: rgba(245, 200, 66, 0.12);
+            color: var(--gold);
+        }
+
+        .why-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .why-desc {
+            font-size: 0.9rem;
+            color: var(--text2);
+            line-height: 1.7;
+        }
+
+        .why-num {
+            position: absolute;
+            bottom: 20px;
+            right: 24px;
+            font-family: 'Syne', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--border);
+            line-height: 1;
+        }
+
+        /* ============================
+       CONTACT
+    ============================ */
+        #contact {
+            padding: 100px 0;
+            background: var(--bg);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .contact-info-header p {
+            color: var(--text2);
+            line-height: 1.7;
+            margin-top: 16px;
+            font-size: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .contact-item-icon {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            border-radius: 14px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: var(--coral);
+        }
+
+        .contact-item-text strong {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .contact-item-text span {
+            font-size: 0.88rem;
+            color: var(--text2);
+        }
+
+        .contact-form-wrap {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group.full {
+            grid-column: 1/-1;
+        }
+
+        .form-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text2);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .form-input,
+        .form-textarea {
+            padding: 14px 16px;
+            background: var(--bg3);
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.92rem;
+            color: var(--text);
+            transition: all 0.3s;
+            outline: none;
+            width: 100%;
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: var(--text3);
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            border-color: var(--coral);
+            background: var(--bg4);
+            box-shadow: 0 0 0 3px rgba(255, 107, 71, 0.12);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--coral), var(--coral-dark));
+            color: #fff;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Syne', sans-serif;
+            transition: all 0.3s;
+            box-shadow: 0 6px 25px rgba(255, 107, 71, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 35px rgba(255, 107, 71, 0.45);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .form-msg {
+            margin-top: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            display: none;
+        }
+
+        .form-msg.success {
+            background: rgba(45, 184, 122, 0.1);
+            border: 1px solid rgba(45, 184, 122, 0.3);
+            color: var(--green);
+            display: block;
+        }
+
+        .form-msg.error {
+            background: rgba(255, 107, 71, 0.1);
+            border: 1px solid rgba(255, 107, 71, 0.3);
+            color: var(--coral);
+            display: block;
+        }
+
+        /* ============================
+       FOOTER
+    ============================ */
+        footer {
+            background: var(--bg2);
+            border-top: 1px solid var(--border);
+            padding: 60px 0 32px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.8fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 48px;
+        }
+
+        .footer-brand p {
+            font-size: 0.9rem;
+            color: var(--text3);
+            line-height: 1.7;
+            margin-top: 16px;
+            max-width: 260px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .footer-social a {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text3);
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .footer-social a:hover {
+            background: var(--coral);
+            border-color: var(--coral);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .footer-col h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-col ul a {
+            font-size: 0.88rem;
+            color: var(--text3);
+            transition: color 0.3s;
+        }
+
+        .footer-col ul a:hover {
+            color: var(--coral);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-bottom p {
+            font-size: 0.83rem;
+            color: var(--text3);
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-bottom-links a {
+            font-size: 0.83rem;
+            color: var(--text3);
+            transition: color 0.3s;
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--coral);
+        }
+
+        /* ============================
+       PRIVACY PAGE
+    ============================ */
+        #privacy-page {
+            display: none;
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+
+        #privacy-page.active {
+            display: block;
+        }
+
+        .privacy-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 0 100px;
+        }
+
+        .privacy-content h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .privacy-content .meta {
+            color: var(--text3);
+            font-size: 0.88rem;
+            margin-bottom: 48px;
+        }
+
+        .privacy-content h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-top: 40px;
+            margin-bottom: 14px;
+        }
+
+        .privacy-content p,
+        .privacy-content li {
+            color: var(--text2);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .privacy-content ul {
+            padding-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        .privacy-content ul li {
+            margin-bottom: 6px;
+        }
+
+        /* ============================
+       SCROLL TO TOP
+    ============================ */
+        #scrolltop {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--coral), var(--coral-dark));
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            box-shadow: 0 4px 20px rgba(255, 107, 71, 0.4);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s;
+            z-index: 800;
+        }
+
+        #scrolltop.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #scrolltop:hover {
+            transform: translateY(-3px);
+        }
+
+        /* ============================
+       ANIMATIONS
+    ============================ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s, transform 0.7s;
+        }
+
+        /* .reveal.visible {
+      opacity: 1;
+      transform: none;
+    } */
+
+        /* ============================
+       RESPONSIVE
+    ============================ */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-desc {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-ctas {
+                justify-content: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .why-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .nav-links,
+            .nav-actions .btn-primary {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .why-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form-wrap {
+                padding: 24px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .about-chip {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
-<body class="font-sans bg-gray-50 overflow-x-hidden">
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white shadow-lg transition-all duration-300">
-        <div class="container mx-auto px-6 py-3">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center">
-                    <a href="#" class="text-3xl font-bold">
-                        <span class="text-coral">K</span>
-                        <span class="text-green">o</span>
-                        <span class="text-coral">r</span>
-                        <span class="text-green">o</span>
-                    </a>
-                </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="text-gray-700 hover:text-coral font-medium">Home</a>
-                    <a href="#about" class="text-gray-700 hover:text-coral font-medium">About</a>
-                    <a href="#contact" class="text-gray-700 hover:text-coral font-medium">Contact</a>
-                    <a href="https://igdndujs.mychariow.com" target="_blank" class="bg-green text-white px-6 py-2 rounded-full hover:bg-green-700 transition-all btn-hover">Shop Now</a>
-                </div>
-                <div class="md:hidden">
-                    <button id="menu-toggle" class="text-gray-700 focus:outline-none">
-                        <i class="fas fa-bars text-2xl"></i>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="nav-inner">
+                <a class="nav-logo" href="#" onclick="showMain()">
+                    <img src="imgs/koro_rond.png" alt="Koro" />
+                    <span>Koro</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#hero" onclick="showMain()">Accueil</a></li>
+                    <li><a href="#about" onclick="showMain()">À propos</a></li>
+                    <li><a href="#products" onclick="showMain()">Produits</a></li>
+                    <li><a href="#contact" onclick="showMain()">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button class="btn-theme" id="themeToggle" title="Changer de thème">
+                        <i class="fa-solid fa-moon" id="themeIcon"></i>
                     </button>
+                    <a href="https://igdndujs.mychariow.shop" target="_blank" class="btn-primary">
+                        <i class="fa-solid fa-store" style="margin-right:6px;font-size:.8rem;"></i>Boutique
+                    </a>
+                    <button class="hamburger" id="hamburger"><i class="fa-solid fa-bars"></i></button>
                 </div>
-            </div>
-            <div id="mobile-menu" class="md:hidden hidden mt-4 pb-3">
-                <a href="#home" class="block py-2 text-gray-700 hover:text-coral">Home</a>
-                <a href="#about" class="block py-2 text-gray-700 hover:text-coral">About</a>
-                <a href="#contact" class="block py-2 text-gray-700 hover:text-coral">Contact</a>
-                <a href="https://igdndujs.mychariow.com" target="_blank" class="block bg-green text-white px-6 py-2 rounded-full text-center mt-2 w-40">Shop Now</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="min-h-screen flex items-center justify-center parallax bg-gradient-to-r from-orange-300 to-green-400 relative overflow-hidden pt-16">
-        <div class="absolute w-full h-full bg-black opacity-20"></div>
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="flex flex-col md:flex-row items-center"> 
-                <div class="md:w-1/2 text-center md:text-left mb-10 md:mb-0">
-                    <h1 class="text-5xl md:text-6xl font-bold text-white mb-4">Welcome to <span class="text-coral">K</span><span class="text-green ">o</span><span class="text-coral">r</span><span class="text-green">o</span></h1>
-                    <p class="text-xl text-white mb-8">Your one-stop digital shop for everything you need.</p>
-                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start">
-                        <a href="https://igdndujs.mychariow.com" target="_blank" class="bg-green text-white px-8 py-3 rounded-full font-bold hover:bg-green-700 transition-all btn-hover pulse">Explore Shop</a>
-                        <a href="#contact" class="bg-white text-coral px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition-all btn-hover">Contact Us</a>
-                    </div>
-                </div>
-                <div class="md:w-1/2 flex justify-center">
-                    <img src="imgs/koro.png" alt="Online Shopping" class="rounded-full shadow-2xl floating max-w-md w-full">
-                </div>
-            </div>
-        </div>
-        
-        <!-- Floating elements for decoration -->
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            <div class="absolute top-20 left-10 w-16 h-16 rounded-full bg-green opacity-20 floating" style="animation-delay: 0.3s;"></div>
-            <div class="absolute bottom-40 right-20 w-24 h-24 rounded-full bg-coral opacity-15 floating" style="animation-delay: 0.7s;"></div>
-            <div class="absolute top-1/3 right-1/4 w-20 h-20 rounded-full bg-white opacity-10 floating" style="animation-delay: 1.2s;"></div>
-        </div>
-        
-        <!-- Scroll indicator -->
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
-            <div class="animate-bounce w-8 h-14 border-4 border-white rounded-full flex justify-center relative">
-                <div class="w-1 h-3 bg-white rounded-full absolute top-2"></div>
-            </div>
-        </div>
-    </section>
+    <!-- MOBILE NAV -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#hero" onclick="closeMobile();showMain()">Accueil</a>
+        <a href="#about" onclick="closeMobile();showMain()">À propos</a>
+        <a href="#products" onclick="closeMobile();showMain()">Produits</a>
+        <a href="#contact" onclick="closeMobile();showMain()">Contact</a>
+        <a href="https://igdndujs.mychariow.shop" target="_blank" style="color:var(--coral);font-weight:700;">
+            <i class="fa-solid fa-store" style="margin-right:6px;"></i>Visiter la boutique
+        </a>
+    </div>
 
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0">
-                    <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="About Us" class="rounded-lg shadow-xl max-w-md w-full transform transition-all hover:scale-105 duration-500">
-                </div>
-                <div class="md:w-1/2 md:pl-12">
-                    <h2 class="text-4xl font-bold text-gray-800 mb-6">About <span class="text-coral">K</span><span class="text-green">o</span><span class="text-coral">r</span><span class="text-green">o</span></h2>
-                    <p class="text-lg text-gray-600 mb-6">Koro is your premier digital shopping destination, offering a wide variety of products to meet all your needs. From the latest tech gadgets to everyday essentials, we've got you covered.</p>
-                    <p class="text-lg text-gray-600 mb-8">Our mission is to provide a seamless shopping experience with exceptional customer service and high-quality products at competitive prices.</p>
-                    <div class="flex space-x-4">
-                        <a href="https://www.facebook.com/koroofficialline" target="_blank" class="bg-blue-600 text-white px-6 py-2 rounded-full flex items-center hover:bg-blue-700 transition-all btn-hover">
-                            <i class="fab fa-facebook-f mr-2"></i> Facebook
-                        </a>
-                        <a href="https://igdndujs.mychariow.com" target="_blank" class="bg-green text-white px-6 py-2 rounded-full flex items-center hover:bg-green-700 transition-all btn-hover">
-                            <i class="fas fa-shopping-cart mr-2"></i> Visit Shop
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- MAIN SITE -->
+    <main id="main-site">
 
-    <!-- Features Section with Parallax -->
-    <section class="py-20 parallax bg-green text-white" style="background-image: url('imgs/banner.png');">
-        <div class="bg-black bg-opacity-60">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold mb-4">Why Shop With Us</h2>
-                    <p class="text-xl opacity-90">Experience the Koro difference</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-8 transform transition-all hover:scale-105 duration-300">
-                        <div class="w-16 h-16 bg-coral rounded-full flex items-center justify-center mb-6 mx-auto">
-                            <i class="fas fa-truck text-white text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-4 text-center">Fast Delivery</h3>
-                        <p class="text-white text-opacity-90">Get your products delivered quickly and efficiently to your doorstep.</p>
-                    </div>
-                    <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-8 transform transition-all hover:scale-105 duration-300">
-                        <div class="w-16 h-16 bg-coral rounded-full flex items-center justify-center mb-6 mx-auto">
-                            <i class="fas fa-undo text-white text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-4 text-center">Easy Returns</h3>
-                        <p class="text-white text-opacity-90">Not satisfied? Our hassle-free return policy has you covered.</p>
-                    </div>
-                    <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-8 transform transition-all hover:scale-105 duration-300">
-                        <div class="w-16 h-16 bg-coral rounded-full flex items-center justify-center mb-6 mx-auto">
-                            <i class="fas fa-headset text-white text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-4 text-center">24/7 Support</h3>
-                        <p class="text-white text-opacity-90">Our customer service team is always ready to assist you.</p>
-                    </div>
-                </div>
+        <!-- HERO -->
+        <section id="hero">
+            <div class="hero-bg">
+                <div class="hero-orb hero-orb-1"></div>
+                <div class="hero-orb hero-orb-2"></div>
+                <div class="hero-grid"></div>
             </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">Get In Touch</h2>
-                <p class="text-xl text-gray-600">We'd love to hear from you!</p>
-            </div>
-            <div class="flex flex-col md:flex-row">
-                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-8">
-                    <form class="bg-white p-8 rounded-xl shadow-lg">
-                        <div class="mb-6">
-                            <label for="name" class="block text-gray-700 font-medium mb-2">Name</label>
-                            <input type="text" id="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-coral" placeholder="Your name">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-left">
+                        <div class="hero-badge">
+                            <span></span>
+                            Boutique Numérique
                         </div>
-                        <div class="mb-6">
-                            <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
-                            <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-coral" placeholder="Your email">
+                        <h1 class="hero-title font-display">
+                            Des produits<br />
+                            <span class="text-gradient">numériques</span><br />
+                            pour votre <span class="text-gradient-green">réussite</span>
+                        </h1>
+                        <p class="hero-desc">
+                            Koro vous propose une sélection exclusive de ressources digitales — guides, outils IA,
+                            formations — pour propulser votre vie professionnelle et académique.
+                        </p>
+                        <div class="hero-ctas">
+                            <a href="#products" class="btn-primary">
+                                <i class="fa-solid fa-bolt" style="margin-right:6px;"></i>Voir les produits
+                            </a>
+                            <a href="#about" class="btn-outline">En savoir plus</a>
                         </div>
-                        <div class="mb-6">
-                            <label for="message" class="block text-gray-700 font-medium mb-2">Message</label>
-                            <textarea id="message" rows="5" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-coral" placeholder="Your message"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-coral text-white py-3 rounded-lg font-bold hover:bg-coral-600 transition-all btn-hover">Send Message</button>
-                    </form>
-                </div>
-                <div class="md:w-1/2 md:pl-8">
-                    <div class="bg-white p-8 rounded-xl shadow-lg h-full">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Contact Information</h3>
-                        <div class="space-y-6">
-                            <div class="flex items-start">
-                                <div class="bg-green bg-opacity-10 p-3 rounded-full mr-4">
-                                    <i class="fas fa-map-marker-alt text-white  text-xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-gray-800 mb-1">Address</h4>
-                                    <p class="text-gray-600">123 Digital Avenue, Online City</p>
-                                </div>
+                        <div class="hero-stats">
+                            <div class="hero-stat">
+                                <div class="hero-stat-num text-gradient">150+</div>
+                                <div class="hero-stat-label">Sujets corrigés</div>
                             </div>
-                            <div class="flex items-start">
-                                <div class="bg-green bg-opacity-10 p-3 rounded-full mr-4">
-                                    <i class="fas fa-envelope text-white  text-xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-gray-800 mb-1">Email</h4>
-                                    <p class="text-gray-600">contact@koro-shop.com</p>
-                                </div>
+                            <div class="hero-stat">
+                                <div class="hero-stat-num text-gradient">100+</div>
+                                <div class="hero-stat-label">Outils IA 2025</div>
                             </div>
-                            <div class="flex items-start">
-                                <div class="bg-green bg-opacity-10 p-3 rounded-full mr-4">
-                                    <i class="fas fa-phone-alt text-white  text-xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-gray-800 mb-1">Phone</h4>
-                                    <p class="text-gray-600">+123 456 7890</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-8">
-                            <h4 class="font-bold text-gray-800 mb-4">Follow Us</h4>
-                            <div class="flex space-x-4">
-                                <a href="https://www.facebook.com/koroofficialline" target="_blank" class="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-700 transition-all btn-hover">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
-                                <a href="#" class="bg-pink-600 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-700 transition-all btn-hover">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
-                                <a href="#" class="bg-green-400 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-500 transition-all btn-hover">
-                                    <i class="fab fa-whatsapp "></i>
-                                </a>
+                            <div class="hero-stat">
+                                <div class="hero-stat-num text-gradient-green">⚡</div>
+                                <div class="hero-stat-label">Accès instantané</div>
                             </div>
                         </div>
                     </div>
+                    <div class="hero-visual">
+                        <div class="hero-img-wrap">
+                            <div class="hero-img-ring-2"></div>
+                            <div class="hero-img-ring"></div>
+                            <img src="imgs/koro_full_rond.png" alt="Koro" class="hero-img" />
+                        </div>
+                        <div class="hero-card top-right">
+                            <div class="hero-card-icon">🚀</div>
+                            <div class="hero-card-val">100%</div>
+                            <div class="hero-card-sub">Numérique & Instantané</div>
+                        </div>
+                        <div class="hero-card bottom-left">
+                            <div class="hero-card-icon">💡</div>
+                            <div class="hero-card-val">Koro Store</div>
+                            <div class="hero-card-sub">Produits premium</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- CTA Section -->
-    <section class="py-16 bg-coral text-white">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold mb-6">Ready to Start Shopping?</h2>
-            <p class="text-xl mb-8 max-w-2xl mx-auto">Browse our extensive collection of products and find exactly what you need.</p>
-            <a href="https://igdndujs.mychariow.com" target="_blank" class="bg-white text-coral px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition-all btn-hover inline-block">Visit Our Shop Now</a>
+        <!-- MARQUEE -->
+        <div class="marquee-section">
+            <div class="marquee-track" id="marquee">
+                <!-- Cloned twice for infinite loop -->
+            </div>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between">
-                <div class="mb-8 md:mb-0">
-                    <a href="#" class="text-3xl font-bold">
-                        <span class="text-coral">K</span>
-                        <span class="text-green">o</span>
-                        <span class="text-coral">r</span>
-                        <span class="text-green">o</span>
+        <!-- ABOUT -->
+        <section id="about">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-visual reveal">
+                        <img src="imgs/koro_full_rond.png" alt="Koro Full" class="about-img-main"
+                            style="border-radius:24px;object-fit:contain;background:var(--bg3);" />
+                        <div class="about-chip tl">
+                            <div class="about-chip-icon">⚡</div>
+                            <div class="about-chip-val">100%</div>
+                            <div class="about-chip-sub">Digital</div>
+                        </div>
+                        <div class="about-chip br">
+                            <div class="about-chip-icon">🌍</div>
+                            <div class="about-chip-val">Partout</div>
+                            <div class="about-chip-sub">Accessible</div>
+                        </div>
+                    </div>
+                    <div class="about-text reveal">
+                        <div class="section-header">
+                            <span class="section-tag">À propos</span>
+                            <h2 class="section-title">Qui est <span class="text-gradient">Koro</span> ?</h2>
+                        </div>
+                        <p>Koro est votre destination numérique de référence, spécialisée dans la distribution de
+                            ressources digitales de haute qualité pour accompagner votre succès.</p>
+                        <p>Notre mission : vous donner accès aux meilleurs outils, formations et ressources —
+                            immédiatement, où que vous soyez dans le monde.</p>
+                        <div class="about-features">
+                            <div class="about-feat">
+                                <div class="about-feat-icon"><i class="fa-solid fa-bolt"></i></div>
+                                <div class="about-feat-text">
+                                    <strong>Livraison Instantanée</strong>
+                                    <span>Accès immédiat après achat</span>
+                                </div>
+                            </div>
+                            <div class="about-feat">
+                                <div class="about-feat-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                                <div class="about-feat-text">
+                                    <strong>Paiement Sécurisé</strong>
+                                    <span>Transactions protégées</span>
+                                </div>
+                            </div>
+                            <div class="about-feat">
+                                <div class="about-feat-icon"><i class="fa-solid fa-star"></i></div>
+                                <div class="about-feat-text">
+                                    <strong>Qualité Premium</strong>
+                                    <span>Contenus soigneusement sélectionnés</span>
+                                </div>
+                            </div>
+                            <div class="about-feat">
+                                <div class="about-feat-icon"><i class="fa-solid fa-headset"></i></div>
+                                <div class="about-feat-text">
+                                    <strong>Support Réactif</strong>
+                                    <span>Nous sommes là pour vous</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about-socials">
+                            <a href="https://web.facebook.com/koroofficialline" target="_blank" class="social-btn">
+                                <i class="fa-brands fa-facebook-f"></i> Facebook
+                            </a>
+                            <a href="https://igdndujs.mychariow.shop" target="_blank" class="social-btn">
+                                <i class="fa-solid fa-shopping-bag"></i> Boutique
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUCTS -->
+        <section id="products">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-tag">Nos Produits</span>
+                    <h2 class="section-title">Découvrez notre <span class="text-gradient">catalogue</span></h2>
+                    <p class="section-desc">Des ressources numériques premium pour vous aider à atteindre vos objectifs
+                        professionnels et académiques.</p>
+                </div>
+                <div id="products-grid" class="products-grid">
+                    <div class="products-loading">
+                        <div class="spinner"></div>
+                        <p>Chargement des produits...</p>
+                    </div>
+                </div>
+                <div class="products-cta reveal">
+                    <a href="https://igdndujs.mychariow.shop" target="_blank" class="btn-secondary">
+                        <i class="fa-solid fa-store"></i>
+                        Voir tous les produits sur la boutique
+                        <i class="fa-solid fa-arrow-right"></i>
                     </a>
-                    <p class="mt-4 text-gray-400">Your premier digital shopping destination.</p>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
-                    <div>
-                        <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
-                        <ul class="space-y-2">
-                            <li><a href="#home" class="text-gray-400 hover:text-white transition-all">Home</a></li>
-                            <li><a href="#about" class="text-gray-400 hover:text-white transition-all">About</a></li>
-                            <li><a href="#contact" class="text-gray-400 hover:text-white transition-all">Contact</a></li>
-                        </ul>
+            </div>
+        </section>
+
+        <!-- WHY KORO -->
+        <section id="why">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-tag">Pourquoi Koro</span>
+                    <h2 class="section-title">L'excellence à <span class="text-gradient-green">chaque étape</span></h2>
+                    <p class="section-desc">Nous nous engageons à vous offrir la meilleure expérience d'achat numérique.
+                    </p>
+                </div>
+                <div class="why-grid">
+                    <div class="why-card reveal">
+                        <div class="why-icon orange"><i class="fa-solid fa-bolt"></i></div>
+                        <h3 class="why-title">Accès Instantané</h3>
+                        <p class="why-desc">Téléchargez vos produits immédiatement après l'achat. Pas d'attente, tout
+                            est disponible en quelques secondes.</p>
+                        <span class="why-num">01</span>
                     </div>
-                    <div>
-                        <h3 class="text-lg font-semibold mb-4">Shop</h3>
-                        <ul class="space-y-2">
-                            <li><a href="https://igdndujs.mychariow.com" target="_blank" class="text-gray-400 hover:text-white transition-all">All Products</a></li>
-                            <li><a href="https://igdndujs.mychariow.com" class="text-gray-400 hover:text-white transition-all">Featured</a></li>
-                            <li><a href="https://igdndujs.mychariow.com" class="text-gray-400 hover:text-white transition-all">New Arrivals</a></li>
-                        </ul>
-                    </div> 
-                    <div>
-                        <h3 class="text-lg font-semibold mb-4">Connect</h3>
-                        <ul class="space-y-2">
-                            <li><a href="https://www.facebook.com/koroofficialline" target="_blank" class="text-gray-400 hover:text-white transition-all">Facebook</a></li>
-                            <li><a href="#" class="text-gray-400 hover:text-white transition-all">Instagram</a></li>
-                            <li><a href="#" class="text-gray-400 hover:text-white transition-all">WhatsApp</a></li>
-                        </ul>
+                    <div class="why-card reveal">
+                        <div class="why-icon green"><i class="fa-solid fa-gem"></i></div>
+                        <h3 class="why-title">Contenu de Qualité</h3>
+                        <p class="why-desc">Chaque produit est soigneusement sélectionné et vérifié pour vous garantir
+                            un contenu pertinent et de haute valeur.</p>
+                        <span class="why-num">02</span>
+                    </div>
+                    <div class="why-card reveal">
+                        <div class="why-icon gold"><i class="fa-solid fa-shield-halved"></i></div>
+                        <h3 class="why-title">Achat Sécurisé</h3>
+                        <p class="why-desc">Vos paiements sont entièrement protégés. Nous utilisons des plateformes de
+                            confiance pour chaque transaction.</p>
+                        <span class="why-num">03</span>
+                    </div>
+                    <div class="why-card reveal">
+                        <div class="why-icon orange"><i class="fa-solid fa-headset"></i></div>
+                        <h3 class="why-title">Support Dédié</h3>
+                        <p class="why-desc">Notre équipe est disponible pour répondre à toutes vos questions et vous
+                            accompagner dans votre parcours.</p>
+                        <span class="why-num">04</span>
+                    </div>
+                    <div class="why-card reveal">
+                        <div class="why-icon green"><i class="fa-solid fa-rotate"></i></div>
+                        <h3 class="why-title">Mises à Jour</h3>
+                        <p class="why-desc">Bénéficiez des dernières mises à jour de nos contenus pour rester toujours à
+                            la pointe.</p>
+                        <span class="why-num">05</span>
+                    </div>
+                    <div class="why-card reveal">
+                        <div class="why-icon gold"><i class="fa-solid fa-globe"></i></div>
+                        <h3 class="why-title">Accessible Partout</h3>
+                        <p class="why-desc">Accédez à vos produits depuis n'importe quel appareil, où que vous soyez
+                            dans le monde.</p>
+                        <span class="why-num">06</span>
                     </div>
                 </div>
             </div>
-            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400 mb-4 md:mb-0">© 2025 Koro. All rights reserved.</p>
-                <div class="flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-white transition-all">Privacy Policy</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-all">Terms of Service</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-all">Shipping Policy</a>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-tag">Contact</span>
+                    <h2 class="section-title">Parlons de votre <span class="text-gradient">projet</span></h2>
+                    <p class="section-desc">Une question, un partenariat ou un support ? Notre équipe est là pour vous.
+                    </p>
+                </div>
+                <div class="contact-grid">
+                    <div class="contact-info reveal">
+                        <div class="contact-info-header">
+                            <p>Nous sommes disponibles pour répondre à toutes vos questions concernant nos produits
+                                numériques ou pour tout autre renseignement.</p>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-item-icon"><i class="fa-solid fa-envelope"></i></div>
+                            <div class="contact-item-text">
+                                <strong>Email</strong>
+                                <span>koro.official.line@gmail.com</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-item-icon"><i class="fa-solid fa-phone"></i></div>
+                            <div class="contact-item-text">
+                                <strong>Téléphone</strong>
+                                <span>+33 7 51 04 40 63</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-item-icon"><i class="fa-solid fa-location-dot"></i></div>
+                            <div class="contact-item-text">
+                                <strong>Adresse</strong>
+                                <span>Avenue de la Valeuse, 14200<br />Hérouville-Saint-Clair</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-item-icon"><i class="fa-brands fa-facebook-f"></i></div>
+                            <div class="contact-item-text">
+                                <strong>Facebook</strong>
+                                <span><a href="https://web.facebook.com/koroofficialline" target="_blank"
+                                        style="color:var(--coral);">koroofficialline</a></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form-wrap reveal">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label" for="fname">Prénom</label>
+                                <input class="form-input" type="text" id="fname" placeholder="Jean" />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="lname">Nom</label>
+                                <input class="form-input" type="text" id="lname" placeholder="Dupont" />
+                            </div>
+                            <div class="form-group full">
+                                <label class="form-label" for="femail">Email</label>
+                                <input class="form-input" type="email" id="femail" placeholder="jean@exemple.com" />
+                            </div>
+                            <div class="form-group full">
+                                <label class="form-label" for="fsubject">Sujet</label>
+                                <input class="form-input" type="text" id="fsubject" placeholder="Votre sujet..." />
+                            </div>
+                            <div class="form-group full">
+                                <label class="form-label" for="fmessage">Message</label>
+                                <textarea class="form-textarea" id="fmessage"
+                                    placeholder="Décrivez votre demande..."></textarea>
+                            </div>
+                        </div>
+                        <button class="btn-submit" id="submitBtn" onclick="sendEmail()">
+                            <i class="fa-solid fa-paper-plane"></i> Envoyer le message
+                        </button>
+                        <div class="form-msg" id="formMsg"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- PRIVACY PAGE -->
+    <div id="privacy-page">
+        <div class="container">
+            <div class="privacy-content">
+                <a href="#" onclick="showMain();return false;"
+                    style="display:inline-flex;align-items:center;gap:8px;color:var(--coral);font-size:.9rem;font-weight:600;margin-bottom:32px;">
+                    <i class="fa-solid fa-arrow-left"></i> Retour au site
+                </a>
+                <h1 class="font-display">Politique de Confidentialité</h1>
+                <p class="meta">Dernière mise à jour : Avril 2025 — Koro Store</p>
+
+                <h2>1. Introduction</h2>
+                <p>Bienvenue sur le site de Koro ("nous", "notre", "nos"). Nous respectons votre vie privée et nous nous
+                    engageons à protéger vos données personnelles. Cette politique de confidentialité vous informe sur
+                    la manière dont nous traitons vos données personnelles lorsque vous visitez notre site web ou
+                    achetez nos produits.</p>
+
+                <h2>2. Données que nous collectons</h2>
+                <p>Nous pouvons collecter, utiliser, stocker et transférer différents types de données personnelles vous
+                    concernant, notamment :</p>
+                <ul>
+                    <li><strong>Données d'identité :</strong> prénom, nom de famille.</li>
+                    <li><strong>Données de contact :</strong> adresse e-mail, numéro de téléphone.</li>
+                    <li><strong>Données de transaction :</strong> détails des produits achetés et les paiements
+                        effectués.</li>
+                    <li><strong>Données techniques :</strong> adresse IP, type et version du navigateur.</li>
+                </ul>
+
+                <h2>3. Comment nous utilisons vos données</h2>
+                <p>Nous utilisons vos données personnelles uniquement pour :</p>
+                <ul>
+                    <li>Traiter et livrer vos commandes.</li>
+                    <li>Gérer votre relation client avec nous.</li>
+                    <li>Vous envoyer des notifications importantes concernant vos achats.</li>
+                    <li>Améliorer notre site web et nos services.</li>
+                    <li>Répondre à vos messages et demandes de support.</li>
+                </ul>
+
+                <h2>4. Partage des données</h2>
+                <p>Nous ne vendons, ne louons et ne partageons jamais vos données personnelles avec des tiers à des fins
+                    commerciales. Nous pouvons partager vos données uniquement avec des prestataires de services qui
+                    nous aident à gérer notre boutique (ex : Chariow pour le traitement des paiements).</p>
+
+                <h2>5. Sécurité des données</h2>
+                <p>Nous avons mis en place des mesures de sécurité appropriées pour empêcher que vos données
+                    personnelles ne soient accidentellement perdues, utilisées, altérées ou divulguées sans
+                    autorisation. Toutes les transactions sont sécurisées par notre partenaire de paiement Chariow.</p>
+
+                <h2>6. Conservation des données</h2>
+                <p>Nous ne conservons vos données personnelles que le temps nécessaire aux fins pour lesquelles elles
+                    ont été collectées, en tenant compte de nos obligations légales.</p>
+
+                <h2>7. Vos droits légaux</h2>
+                <p>Conformément au RGPD, vous disposez de droits concernant vos données personnelles, notamment :</p>
+                <ul>
+                    <li>Le droit d'accès à vos données.</li>
+                    <li>Le droit de rectification de vos données.</li>
+                    <li>Le droit à l'effacement de vos données.</li>
+                    <li>Le droit d'opposition au traitement de vos données.</li>
+                </ul>
+                <p>Pour exercer l'un de ces droits, veuillez nous contacter à : <a
+                        href="mailto:koro.official.line@gmail.com"
+                        style="color:var(--coral);">koro.official.line@gmail.com</a></p>
+
+                <h2>8. Cookies</h2>
+                <p>Notre site peut utiliser des cookies pour améliorer votre expérience de navigation. Vous pouvez
+                    désactiver les cookies dans les paramètres de votre navigateur, bien que cela puisse affecter
+                    certaines fonctionnalités du site.</p>
+
+                <h2>9. Modifications</h2>
+                <p>Nous nous réservons le droit de mettre à jour cette politique de confidentialité à tout moment. Nous
+                    vous informerons de tout changement en publiant la nouvelle politique sur cette page.</p>
+
+                <h2>10. Contact</h2>
+                <p>Pour toute question concernant cette politique, contactez-nous :</p>
+                <ul>
+                    <li>Email : <a href="mailto:koro.official.line@gmail.com"
+                            style="color:var(--coral);">koro.official.line@gmail.com</a></li>
+                    <li>Téléphone : +33 7 51 04 40 63</li>
+                    <li>Adresse : Avenue de la Valeuse, 14200 Hérouville-Saint-Clair</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a class="nav-logo" href="#" onclick="showMain()" style="display:inline-flex;">
+                        <img src="imgs/koro_rond.png" alt="Koro"
+                            style="width:40px;height:40px;border-radius:50%;object-fit:contain;" />
+                        <span
+                            style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;background:linear-gradient(135deg,var(--coral),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Koro</span>
+                    </a>
+                    <p>Des produits numériques conçus pour votre réussite. ⚡ Qualité • Rapidité • Confiance.</p>
+                    <div class="footer-social">
+                        <a href="https://web.facebook.com/koroofficialline" target="_blank"><i
+                                class="fa-brands fa-facebook-f"></i></a>
+                        <a href="mailto:koro.official.line@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+                        <a href="https://igdndujs.mychariow.shop" target="_blank"><i class="fa-solid fa-store"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="#hero" onclick="showMain()">Accueil</a></li>
+                        <li><a href="#about" onclick="showMain()">À propos</a></li>
+                        <li><a href="#products" onclick="showMain()">Produits</a></li>
+                        <li><a href="#why" onclick="showMain()">Pourquoi Koro</a></li>
+                        <li><a href="#contact" onclick="showMain()">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Boutique</h4>
+                    <ul>
+                        <li><a href="https://igdndujs.mychariow.shop" target="_blank">Tous les produits</a></li>
+                        <li><a href="https://igdndujs.mychariow.shop" target="_blank">Nouveautés</a></li>
+                        <li><a href="https://igdndujs.mychariow.shop" target="_blank">Promotions</a></li>
+                        <li><a href="https://igdndujs.mychariow.shop" target="_blank">Télécharger</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Légal</h4>
+                    <ul>
+                        <li><a href="#" onclick="showPrivacy();return false;">Politique de confidentialité</a></li>
+                        <li><a href="#contact" onclick="showMain()">Support</a></li>
+                        <li><a href="https://igdndujs.mychariow.shop" target="_blank">CGV</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Koro. Tous droits réservés. Fait avec ❤️ pour votre réussite.</p>
+                <div class="footer-bottom-links">
+                    <a href="#" onclick="showPrivacy();return false;">Confidentialité</a>
+                    <a href="#contact" onclick="showMain()">Contact</a>
+                    <a href="https://igdndujs.mychariow.shop" target="_blank">Boutique</a>
                 </div>
             </div>
         </div>
     </footer>
 
+    <!-- SCROLL TO TOP -->
+    <button id="scrolltop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <i class="fa-solid fa-chevron-up"></i>
+    </button>
+
     <script>
-        // Mobile menu toggle
-        document.getElementById('menu-toggle').addEventListener('click', function() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
+        /* ============================
+           CONFIG
+        ============================ */
+        const CHARIOW_API_KEY = 'sk_x11zscfm_1f5ba4fbeccdba0e9d5d04ad42bd996b';
+        const SHOP_URL = 'https://igdndujs.mychariow.shop';
+
+        /* ============================
+           EMAILJS INIT
+           Using EmailJS free tier with Gmail SMTP
+           User needs to configure their EmailJS account at emailjs.com
+        ============================ */
+        // EmailJS Public Key & Service/Template IDs
+        // To configure: go to emailjs.com, create account,
+        // add Gmail service with provided SMTP credentials,
+        // create a template, replace these values
+        const EMAILJS_PUBLIC_KEY = 'INWMg6yagtHu4wYlu';
+        const EMAILJS_SERVICE_ID = 'service_uejja2m';
+        const EMAILJS_TEMPLATE_ID = 'template_dqpvoo8';
+
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+
+        /* ============================
+           THEME
+        ============================ */
+        const html = document.documentElement;
+        const themeBtn = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+
+        function setTheme(t) {
+            html.setAttribute('data-theme', t);
+            localStorage.setItem('koro-theme', t);
+            themeIcon.className = t === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        }
+
+        const savedTheme = localStorage.getItem('koro-theme') || 'dark';
+        setTheme(savedTheme);
+
+        themeBtn.addEventListener('click', () => {
+            setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
         });
 
-        // GSAP animations
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Animate hero section elements
-        gsap.from(".hero-content", {
-            duration: 1,
-            y: 50,
-            opacity: 0,
-            ease: "power3.out"
+        /* ============================
+           NAVBAR
+        ============================ */
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 60);
+            document.getElementById('scrolltop').classList.toggle('visible', window.scrollY > 400);
         });
 
-        gsap.from(".hero-image", {
-            duration: 1,
-            x: 50,
-            opacity: 0,
-            ease: "power3.out",
-            delay: 0.3
-        });
+        /* ============================
+           MOBILE MENU
+        ============================ */
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobileNav');
 
-        // Animate about section on scroll
-        gsap.from("#about img", {
-            scrollTrigger: {
-                trigger: "#about",
-                start: "top 75%",
-                toggleActions: "play none none none"
-            },
-            x: -100,
-            opacity: 0,
-            duration: 1,
-            ease: "power3.out"
+        hamburger.addEventListener('click', () => {
+            mobileNav.classList.toggle('open');
         });
-
-        gsap.from("#about .md:pl-12", {
-            scrollTrigger: {
-                trigger: "#about",
-                start: "top 75%",
-                toggleActions: "play none none none"
-            },
-            x: 100,
-            opacity: 0,
-            duration: 1,
-            ease: "power3.out",
-            delay: 0.3
+        document.addEventListener('click', (e) => {
+            if (!navbar.contains(e.target) && !mobileNav.contains(e.target)) {
+                mobileNav.classList.remove('open');
+            }
         });
+        function closeMobile() { mobileNav.classList.remove('open'); }
 
-        // Animate features on scroll
-        gsap.utils.toArray(".bg-white.bg-opacity-10").forEach(item => {
-            gsap.from(item, {
-                scrollTrigger: {
-                    trigger: item,
-                    start: "top 80%",
-                    toggleActions: "play none none none"
-                },
-                y: 50,
-                opacity: 0,
-                duration: 0.8,
-                stagger: 0.2
+        /* ============================
+           PAGE ROUTING
+        ============================ */
+        function showMain() {
+            document.getElementById('main-site').style.display = 'block';
+            document.getElementById('privacy-page').classList.remove('active');
+        }
+        function showPrivacy() {
+            document.getElementById('main-site').style.display = 'none';
+            document.getElementById('privacy-page').classList.add('active');
+            window.scrollTo({ top: 0 });
+        }
+
+        /* ============================
+           SMOOTH SCROLL
+        ============================ */
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', function (e) {
+                const id = this.getAttribute('href');
+                if (id === '#' || id === '#privacy') return;
+                const el = document.querySelector(id);
+                if (el) {
+                    e.preventDefault();
+                    window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
+                }
             });
         });
 
-        // Animate contact form on scroll
-        gsap.from("form", {
-            scrollTrigger: {
-                trigger: "#contact",
-                start: "top 75%",
-                toggleActions: "play none none none"
-            },
-            y: 50,
-            opacity: 0,
-            duration: 1,
-            ease: "power3.out"
+        /* ============================
+           MARQUEE
+        ============================ */
+        const items = [
+            '💡 Produits Numériques',
+            '⚡ Livraison Instantanée',
+            '🎯 Concours Douanes & Trésor',
+            '🤖 100+ Outils IA 2025',
+            '🔐 Paiement Sécurisé',
+            '📚 Ressources Premium',
+            '🌍 Accessible Partout',
+            '⭐ Qualité Garantie',
+        ];
+        const track = document.getElementById('marquee');
+        const all = [...items, ...items]; // double for infinite
+        all.forEach(txt => {
+            const div = document.createElement('div');
+            div.className = 'marquee-item';
+            div.innerHTML = `<i class="fa-solid fa-circle"></i> ${txt}`;
+            track.appendChild(div);
         });
 
-        gsap.from(".contact-info", {
-            scrollTrigger: {
-                trigger: "#contact",
-                start: "top 75%",
-                toggleActions: "play none none none"
-            },
-            y: 50,
-            opacity: 0,
-            duration: 1,
-            ease: "power3.out",
-            delay: 0.3
-        });
+        /* ============================
+           GSAP ANIMATIONS
+        ============================ */
+        gsap.registerPlugin(ScrollTrigger);
 
-        // Navbar scroll effect
-        window.addEventListener("scroll", function() {
-            const nav = document.querySelector("nav");
-            if (window.scrollY > 50) {
-                nav.classList.add("py-2");
-                nav.classList.add("shadow-md");
-            } else {
-                nav.classList.remove("py-2");
-                nav.classList.remove("shadow-md");
-            }
-        });
+        // Hero entrance
+        gsap.from('.hero-badge', { opacity: 0, y: 20, duration: 0.6, delay: 0.2 });
+        gsap.from('.hero-title', { opacity: 0, y: 30, duration: 0.8, delay: 0.4 });
+        gsap.from('.hero-desc', { opacity: 0, y: 20, duration: 0.7, delay: 0.6 });
+        gsap.from('.hero-ctas', { opacity: 0, y: 20, duration: 0.7, delay: 0.8 });
+        gsap.from('.hero-stats', { opacity: 0, y: 20, duration: 0.7, delay: 1.0 });
+        gsap.from('.hero-visual', { opacity: 0, x: 50, duration: 1.0, delay: 0.5 });
+        gsap.from('.hero-card', { opacity: 0, scale: 0.8, duration: 0.6, delay: 1.2, stagger: 0.2 });
 
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    const mobileMenu = document.getElementById('mobile-menu');
-                    mobileMenu.classList.add('hidden');
+        // Reveal on scroll
+
+        gsap.utils.toArray('.reveal').forEach(el => {
+            gsap.fromTo(el,
+                { opacity: 0, y: 40 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top 85%',
+                    }
                 }
+            );
+        });
+
+        // const reveals = document.querySelectorAll('.reveal');
+        // reveals.forEach(el => {
+        //     gsap.from(el, {
+        //         scrollTrigger: { trigger: el, start: 'top 82%' },
+        //         opacity: 0, y: 40, duration: 0.8, ease: 'power2.out'
+        //     });
+        // });
+
+        /* ============================
+           CHARIOW PRODUCTS API
+        ============================ */
+        async function fetchProducts() {
+            const grid = document.getElementById('products-grid');
+            try {
+                const response = await fetch('https://api.chariow.com/v1/products?per_page=20', {
+                    headers: { 'Authorization': `Bearer ${CHARIOW_API_KEY}` }
+                });
+                const json = await response.json();
+
+                const products = json.data || [];
+
+                if (!products.length) {
+                    grid.innerHTML = `
+          <div class="products-empty" style="grid-column:1/-1">
+            <i class="fa-solid fa-box-open"></i>
+            <p>Aucun produit disponible pour le moment. Revenez bientôt !</p>
+          </div>`;
+                    return;
+                }
+
+                grid.innerHTML = '';
+
+                products.forEach((p, i) => {
+                    const pricing = p.pricing || {};
+                    const currentPrice = pricing.current_price || pricing.effective || {};
+                    const origPrice = pricing.price || {};
+                    const salePrice = pricing.sale_price;
+                    const priceOff = pricing.price_off;
+                    const isFree = p.is_free;
+
+                    const priceDisplay = isFree ? 'Gratuit' : (currentPrice.formatted || '—');
+                    const origDisplay = (!isFree && origPrice.formatted && origPrice.value > currentPrice.value) ? origPrice.formatted : null;
+
+                    const thumb = p.pictures?.thumbnail;
+                    const category = p.category?.label || '';
+                    const type = p.type || 'downloadable';
+
+                    // Strip HTML from description
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = p.description || '';
+                    const cleanDesc = tempDiv.textContent || tempDiv.innerText || '';
+
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.style.animationDelay = `${i * 0.1}s`;
+
+                    card.innerHTML = `
+          <div class="product-thumb">
+            ${thumb
+                            ? `<img src="${thumb}" alt="${p.name}" loading="lazy" />`
+                            : `<div class="product-thumb-fallback">${type === 'course' ? '🎓' : type === 'downloadable' ? '📦' : '💎'}</div>`
+                        }
+            ${(priceOff || salePrice) && !isFree ? `<span class="product-badge badge-sale">${priceOff || 'Promo'}</span>` : ''}
+            ${isFree ? `<span class="product-badge badge-free">Gratuit</span>` : ''}
+            ${category ? `<span class="badge-category">${category}</span>` : ''}
+          </div>
+          <div class="product-body">
+            <h3 class="product-name">${p.name}</h3>
+            ${cleanDesc ? `<p class="product-desc">${cleanDesc}</p>` : ''}
+            <div class="product-footer">
+              <div class="product-price">
+                <span class="product-price-current">${isFree ? '<span style="color:var(--green)">Gratuit</span>' : priceDisplay}</span>
+                ${origDisplay ? `<span class="product-price-original">${origDisplay}</span>` : ''}
+                ${priceOff ? `<span class="product-off">-${priceOff}</span>` : ''}
+              </div>
+              <a href="${SHOP_URL}" target="_blank" class="btn-product">
+                <i class="fa-solid fa-bag-shopping"></i>
+                Acheter
+              </a>
+            </div>
+          </div>`;
+
+                    grid.appendChild(card);
+
+                    // Animate in
+                    gsap.from(card, {
+                        scrollTrigger: { trigger: card, start: 'top 90%' },
+                        opacity: 0, y: 30, duration: 0.6, delay: i * 0.08
+                    });
+                });
+
+            } catch (err) {
+                console.error('Chariow API error:', err);
+                grid.innerHTML = `
+        <div class="products-empty" style="grid-column:1/-1">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <p>Impossible de charger les produits.<br/>
+          <a href="${SHOP_URL}" target="_blank" style="color:var(--coral);">Visitez directement notre boutique →</a></p>
+        </div>`;
+            }
+        }
+
+        fetchProducts();
+
+        /* ============================
+           CONTACT FORM (EmailJS)
+           NOTE: Configure EmailJS at emailjs.com with your Gmail SMTP
+           Service: Gmail SMTP — smtp.gmail.com:587
+           Username: abdulmoustapha64@gmail.com
+           Password: myuawtnbzfbapwvv
+           Then replace EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID
+        ============================ */
+        async function sendEmail() {
+            const btn = document.getElementById('submitBtn');
+            const msg = document.getElementById('formMsg');
+            msg.className = 'form-msg';
+            msg.style.display = 'none';
+
+            const fname = document.getElementById('fname').value.trim();
+            const lname = document.getElementById('lname').value.trim();
+            const email = document.getElementById('femail').value.trim();
+            const subject = document.getElementById('fsubject').value.trim();
+            const message = document.getElementById('fmessage').value.trim();
+
+            if (!fname || !email || !message) {
+                msg.textContent = '❌ Veuillez remplir au moins le prénom, l\'email et le message.';
+                msg.className = 'form-msg error';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Envoi en cours...';
+
+            try {
+                await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                    from_name: `${fname} ${lname}`,
+                    from_email: email,
+                    subject: subject || 'Message depuis le site Koro',
+                    message: message,
+                    to_email: 'koro.official.line@gmail.com',
+                    reply_to: email,
+                });
+
+                msg.textContent = '✅ Message envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.';
+                msg.className = 'form-msg success';
+                document.getElementById('fname').value = '';
+                document.getElementById('lname').value = '';
+                document.getElementById('femail').value = '';
+                document.getElementById('fsubject').value = '';
+                document.getElementById('fmessage').value = '';
+            } catch (err) {
+                console.error('EmailJS error:', err);
+                msg.innerHTML = `❌ Erreur d'envoi. Contactez-nous directement à <a href="mailto:koro.official.line@gmail.com" style="color:var(--coral);">koro.official.line@gmail.com</a>`;
+                msg.className = 'form-msg error';
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Envoyer le message';
+        }
+
+        /* ============================
+           FORM ENTER KEY
+        ============================ */
+        document.querySelectorAll('.form-input').forEach(inp => {
+            inp.addEventListener('keypress', e => {
+                if (e.key === 'Enter') sendEmail();
             });
         });
     </script>
 </body>
+
 </html>
